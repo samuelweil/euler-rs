@@ -58,10 +58,6 @@ impl Iterator for PrimeIterator {
     }
 }
 
-pub fn primes() -> PrimeIterator {
-    PrimeIterator::new()
-}
-
 #[cfg(test)]
 mod test {
     use super::*;
@@ -69,7 +65,7 @@ mod test {
     #[test]
     fn primes() {
 
-        let mut prime_gen = PrimeIterator::new();
+        let prime_gen = PrimeIterator::new();
         let first10: Vec<i64> = prime_gen.take(10).collect();
 
         assert_eq!(first10, vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29]);

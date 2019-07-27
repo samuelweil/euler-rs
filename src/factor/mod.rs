@@ -1,4 +1,4 @@
-mod primes; 
+mod primes;
 
 use primes::PrimeIterator;
 
@@ -7,7 +7,7 @@ use std::collections::BTreeMap;
 pub struct Factors {
     // Use a BTreeMap instead of a HashMap to ensure
     // that the prime numbers are returned in order
-    factor_map: BTreeMap<i64, i64>
+    factor_map: BTreeMap<i64, i64>,
 }
 
 impl Factors {
@@ -26,8 +26,8 @@ impl Factors {
     }
 
     pub fn new() -> Factors {
-        Factors{
-            factor_map: BTreeMap::new()
+        Factors {
+            factor_map: BTreeMap::new(),
         }
     }
 
@@ -56,14 +56,13 @@ pub fn factor(n: i64) -> Factors {
 fn next_factor(n: i64, primes: &mut PrimeIterator) -> i64 {
     for prime in primes {
         if n % prime == 0 {
-            return prime
+            return prime;
         }
 
         if prime > n {
-            return n
+            return n;
         }
     }
-    
     0
 }
 
@@ -71,7 +70,7 @@ fn next_factor(n: i64, primes: &mut PrimeIterator) -> i64 {
 mod test {
     use super::*;
 
-    #[test] 
+    #[test]
     fn factor_test() {
         assert_eq!(factor(6).factor_list(), vec![2, 3]);
     }
