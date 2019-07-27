@@ -1,6 +1,9 @@
 mod factor;
+mod tools;
 
 use factor::factor;
+use tools::merge_max;
+use std::collections::HashMap;
 
 use euler::*;
 
@@ -22,7 +25,7 @@ fn problem2() -> i64 {
 fn problem3() -> i64 {
     let val: i64 = 600851475143;
 
-    *factor(val).iter().max().unwrap()
+    *factor(val).factor_list().iter().max().unwrap()
 }
 
 fn problem4() -> i64 {
@@ -49,4 +52,40 @@ pub fn main() {
     println!("problem 2: {}", problem2());
     println!("problem 3: {}", problem3());
     println!("problem 4: {}", problem4());
+    println!("problem 5: {}", problem5());
+}
+
+use std::collections::BTreeMap;
+
+fn lowest_multiple(nums: Vec<i64>) -> i64 {
+
+    let mut fcs: BTreeMap<i64, i64> = BTreeMap::new();
+
+    for i in nums {
+        fcs = merge_max(&fcs, &factor(i).factors());
+    }
+
+    let mut prod = 1;
+    
+    for (k, v) in fcs {
+        prod *= k.pow(v as u32);
+    }
+    
+    prod
+}
+
+fn problem5() -> i64 {
+    let v: Vec<i64> = (1..=10).collect();
+    lowest_multiple(v)
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_lowest_multiple() {
+        assert_eq!(lowest_multiple(vec![6,8]), 24);
+        assert_eq!(lowest_multiple(vec![3, 7]), 21);
+    }
 }

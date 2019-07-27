@@ -29,9 +29,9 @@ impl PrimeIterator {
     }
 
     fn next_prime(&self) -> i64 {
-        let mut value = *self.primes.last().unwrap();
+        let mut value = *self.primes.last().unwrap() + 2;
         while !self.is_prime(value) {
-            value += 1;
+            value += 2;
         }
 
         value

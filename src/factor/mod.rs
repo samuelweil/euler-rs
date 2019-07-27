@@ -2,13 +2,16 @@ mod primes;
 
 use primes::PrimeIterator;
 
-use std::collections::HashMap;
-struct Factors {
-    factor_map: HashMap<i64, i64>
+use std::collections::BTreeMap;
+
+pub struct Factors {
+    // Use a BTreeMap instead of a HashMap to ensure
+    // that the prime numbers are returned in order
+    factor_map: BTreeMap<i64, i64>
 }
 
 impl Factors {
-    fn factor_list(&self) -> Vec<i64> {
+    pub fn factor_list(&self) -> Vec<i64> {
         let mut out = Vec::new();
 
         for i in self.factor_map.keys() {
@@ -17,12 +20,25 @@ impl Factors {
 
         out
     }
+
+    pub fn factors(&self) -> BTreeMap<i64, i64> {
+        self.factor_map.clone()
+    }
+
+    pub fn new() -> Factors {
+        Factors{
+            factor_map: BTreeMap::new()
+        }
+    }
+
+    pub fn push(&mut self, n: i64) {
+        let count = self.factor_map.entry(n).or_insert(0);
+        *count += 1;
+    }
 }
 
-
-
-pub fn factor(n: i64) -> Vec<i64> {
-    let mut factors = Vec::new();
+pub fn factor(n: i64) -> Factors {
+    let mut factors = Factors::new();
     let mut prime_list = PrimeIterator::new();
 
     let mut val = n;
@@ -35,7 +51,6 @@ pub fn factor(n: i64) -> Vec<i64> {
     }
 
     factors
-
 }
 
 fn next_factor(n: i64, primes: &mut PrimeIterator) -> i64 {
@@ -58,6 +73,6 @@ mod test {
 
     #[test] 
     fn factor_test() {
-        assert_eq!(factor(6), vec![2, 3]);
+        assert_eq!(factor(6).factor_list(), vec![2, 3]);
     }
 }
