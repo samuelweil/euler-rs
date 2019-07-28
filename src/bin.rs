@@ -1,104 +1,23 @@
 mod factor;
+mod problem1;
+mod problem2;
+mod problem3;
+mod problem4;
+mod problem5;
+mod problem6;
 mod tools;
 
-use factor::factor;
-use tools::merge_max;
-
-use euler::*;
-
-fn problem1() -> i64 {
-    natural_numbers(1000)
+macro_rules! solve {
+    ($problem:ident) => {
+        println!("{}: {}", stringify!($problem), $problem::$problem());
+    };
 }
 
-fn is_even(n: &i64) -> bool {
-    n % 2 == 0
-}
-
-fn problem2() -> i64 {
-    let nums = FibonnaciIterator::new()
-        .take_while(|n| n < &4000000)
-        .filter(|n| is_even(n));
-    sum(nums)
-}
-
-fn problem3() -> i64 {
-    let val: i64 = 600851475143;
-
-    *factor(val).factor_list().iter().max().unwrap()
-}
-
-fn problem4() -> i64 {
-    use std::cmp::max;
-
-    let mut max_p = 0;
-    let range = || (100..1000).rev();
-
-    for n1 in range() {
-        for n2 in range() {
-            let prod = n1 * n2;
-            if is_palindrome(prod) {
-                max_p = max(prod, max_p);
-                break;
-            }
-        }
-    }
-
-    max_p
-}
-
-fn problem5() -> i64 {
-    let v: Vec<i64> = (1..=20).collect();
-    lowest_multiple(v)
-}
-
-fn problem6() -> i64 {
-    let s: i64 = 1;
-    let e: i64 = 100;
-
-    square_of_sum(s..=e) - sum_of_squares(s..=e)
-}
-
-pub fn main() {
-    println!("problem 1: {}", problem1());
-    println!("problem 2: {}", problem2());
-    println!("problem 3: {}", problem3());
-    println!("problem 4: {}", problem4());
-    println!("problem 5: {}", problem5());
-    println!("problem 6: {}", problem6());
-}
-
-use std::collections::BTreeMap;
-
-fn lowest_multiple(nums: Vec<i64>) -> i64 {
-    let mut fcs: BTreeMap<i64, i64> = BTreeMap::new();
-
-    for i in nums {
-        fcs = merge_max(&fcs, &factor(i).factors());
-    }
-
-    let mut prod = 1;
-    for (k, v) in fcs {
-        prod *= k.pow(v as u32);
-    }
-    prod
-}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    use std::iter::FromIterator;
-
-    #[test]
-    fn test_lowest_multiple() {
-        assert_eq!(lowest_multiple(vec![6, 8]), 24);
-        assert_eq!(lowest_multiple(vec![3, 7]), 21);
-        assert_eq!(lowest_multiple(Vec::from_iter(1i64..=10i64)), 2520);
-    }
-
-    #[test]
-    fn test_problem_6() {
-        let start: i64 = 1;
-        let end: i64 = 10;
-        assert_eq!(square_of_sum(start..=end) - sum_of_squares(start..=end), 2640);
-    }
+fn main() {
+    solve!(problem1);
+    solve!(problem2);
+    solve!(problem3);
+    solve!(problem4);
+    solve!(problem5);
+    solve!(problem6);
 }

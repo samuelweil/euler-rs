@@ -1,27 +1,27 @@
 pub struct PrimeIterator {
     primes: Vec<i64>,
-    n: usize
+    n: usize,
 }
 
 impl PrimeIterator {
     pub fn new() -> PrimeIterator {
-        PrimeIterator{
+        PrimeIterator {
             primes: vec![2, 3, 5, 7],
-            n: 0
+            n: 0,
         }
     }
 
     pub fn new_iter(&self) -> PrimeIterator {
         PrimeIterator {
             primes: self.primes.clone(),
-            n: 0
+            n: 0,
         }
     }
 
     fn is_prime(&self, n: i64) -> bool {
         for prime in &self.primes {
             if n % prime == 0 {
-                return false
+                return false;
             }
         }
 
@@ -42,7 +42,6 @@ impl Iterator for PrimeIterator {
     type Item = i64;
 
     fn next(&mut self) -> Option<i64> {
-        
         let out: Option<i64>;
 
         if self.n < self.primes.len() {
@@ -64,7 +63,6 @@ mod test {
 
     #[test]
     fn primes() {
-
         let prime_gen = PrimeIterator::new();
         let first10: Vec<i64> = prime_gen.take(10).collect();
 

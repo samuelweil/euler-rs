@@ -9,10 +9,6 @@ edition = "2018"
 [dependencies]
 num = "0.2.0"
 
-[lib] 
-name="euler"
-path="src/lib.rs"
-
 [[bin]]
 name="euler"
 path="src/bin.rs"
