@@ -46,12 +46,25 @@ fn problem4() -> i64 {
     max_p
 }
 
+fn problem5() -> i64 {
+    let v: Vec<i64> = (1..=20).collect();
+    lowest_multiple(v)
+}
+
+fn problem6() -> i64 {
+    let s: i64 = 1;
+    let e: i64 = 100;
+
+    square_of_sum(s..=e) - sum_of_squares(s..=e)
+}
+
 pub fn main() {
     println!("problem 1: {}", problem1());
     println!("problem 2: {}", problem2());
     println!("problem 3: {}", problem3());
     println!("problem 4: {}", problem4());
     println!("problem 5: {}", problem5());
+    println!("problem 6: {}", problem6());
 }
 
 use std::collections::BTreeMap;
@@ -70,11 +83,6 @@ fn lowest_multiple(nums: Vec<i64>) -> i64 {
     prod
 }
 
-fn problem5() -> i64 {
-    let v: Vec<i64> = (1..=20).collect();
-    lowest_multiple(v)
-}
-
 #[cfg(test)]
 mod test {
     use super::*;
@@ -85,5 +93,12 @@ mod test {
         assert_eq!(lowest_multiple(vec![6, 8]), 24);
         assert_eq!(lowest_multiple(vec![3, 7]), 21);
         assert_eq!(lowest_multiple(Vec::from_iter(1i64..=10i64)), 2520);
+    }
+
+    #[test]
+    fn test_problem_6() {
+        let start: i64 = 1;
+        let end: i64 = 10;
+        assert_eq!(square_of_sum(start..=end) - sum_of_squares(start..=end), 2640);
     }
 }
