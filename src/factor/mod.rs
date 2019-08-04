@@ -1,4 +1,4 @@
-mod primes;
+pub mod primes;
 
 use primes::PrimeIterator;
 
