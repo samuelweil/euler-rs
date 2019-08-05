@@ -6,6 +6,7 @@ mod problem4;
 mod problem5;
 mod problem6;
 mod problem7;
+mod problem8; 
 mod tools;
 
 macro_rules! solve {
@@ -22,4 +23,5 @@ fn main() {
     solve!(problem5);
     solve!(problem6);
     solve!(problem7);
+    solve!(problem8);
 }
