@@ -1,4 +1,4 @@
-use std::cmp::max;
+use std::cmp::{max};
 use std::collections::BTreeMap;
 
 pub fn merge_max<'a>(
