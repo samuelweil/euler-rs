@@ -1,4 +1,4 @@
-pub fn problem4() -> i64 {
+pub fn problem4() -> u64 {
     use std::cmp::max;
 
     let mut max_p = 0;
@@ -17,7 +17,7 @@ pub fn problem4() -> i64 {
     max_p
 }
 
-fn is_palindrome(n: i64) -> bool {
+fn is_palindrome(n: u64) -> bool {
     let as_str = format!("{}", n);
 
     for (c1, c2) in as_str.chars().zip(as_str.chars().rev()) {

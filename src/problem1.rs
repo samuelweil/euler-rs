@@ -1,12 +1,12 @@
 use std::collections::HashSet;
 
-pub fn problem1() -> i64 {
+pub fn problem1() -> u64 {
     natural_numbers(1000, vec![3, 5].into_iter())
 }
 
-fn natural_numbers<T>(n_max: i64, multiples: T) -> i64
+fn natural_numbers<T>(n_max: u64, multiples: T) -> u64
 where
-    T: Iterator<Item = i64>,
+    T: Iterator<Item = u64>,
 {
     let mut nat_nums = HashSet::new();
 

@@ -8,7 +8,9 @@ mod problem6;
 mod problem7;
 mod problem8; 
 mod problem9;
+mod problem10;
 mod tools;
+mod sieve;
 
 macro_rules! solve {
     ($problem:ident) => {
@@ -26,4 +28,5 @@ fn main() {
     solve!(problem7);
     solve!(problem8);
     solve!(problem9);
+    solve!(problem10);
 }

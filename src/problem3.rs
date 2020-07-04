@@ -1,7 +1,7 @@
 use crate::factor::factor;
 
-pub fn problem3() -> i64 {
-    let val: i64 = 600851475143;
+pub fn problem3() -> u64 {
+    let val: u64 = 600851475143;
 
     *factor(val).factor_list().iter().max().unwrap()
 }

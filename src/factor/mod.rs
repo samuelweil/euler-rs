@@ -7,11 +7,11 @@ use std::collections::BTreeMap;
 pub struct Factors {
     // Use a BTreeMap instead of a HashMap to ensure
     // that the prime numbers are returned in order
-    factor_map: BTreeMap<i64, i64>,
+    factor_map: BTreeMap<u64, u64>,
 }
 
 impl Factors {
-    pub fn factor_list(&self) -> Vec<i64> {
+    pub fn factor_list(&self) -> Vec<u64> {
         let mut out = Vec::new();
 
         for i in self.factor_map.keys() {
@@ -21,7 +21,7 @@ impl Factors {
         out
     }
 
-    pub fn factors(&self) -> BTreeMap<i64, i64> {
+    pub fn factors(&self) -> BTreeMap<u64, u64> {
         self.factor_map.clone()
     }
 
@@ -31,13 +31,13 @@ impl Factors {
         }
     }
 
-    pub fn push(&mut self, n: i64) {
+    pub fn push(&mut self, n: u64) {
         let count = self.factor_map.entry(n).or_insert(0);
         *count += 1;
     }
 }
 
-pub fn factor(n: i64) -> Factors {
+pub fn factor(n: u64) -> Factors {
     let mut factors = Factors::new();
     let mut prime_list = PrimeIterator::new();
 
@@ -53,7 +53,7 @@ pub fn factor(n: i64) -> Factors {
     factors
 }
 
-fn next_factor(n: i64, primes: &mut PrimeIterator) -> i64 {
+fn next_factor(n: u64, primes: &mut PrimeIterator) -> u64 {
     for prime in primes {
         if n % prime == 0 {
             return prime;

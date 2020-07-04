@@ -2,9 +2,9 @@ use std::cmp::max;
 use std::collections::BTreeMap;
 
 pub fn merge_max<'a>(
-    m_in: &'a BTreeMap<i64, i64>,
-    m2: &'a BTreeMap<i64, i64>,
-) -> BTreeMap<i64, i64> {
+    m_in: &'a BTreeMap<u64, u64>,
+    m2: &'a BTreeMap<u64, u64>,
+) -> BTreeMap<u64, u64> {
     let mut m = m_in.clone();
 
     for (k, v) in m2 {
