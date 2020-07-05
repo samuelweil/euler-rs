@@ -1,4 +1,4 @@
-pub struct Grid([[i32; 20]; 20]);
+pub struct Grid([[u32; 20]; 20]);
 
 pub const GRID: Grid = Grid {
     0: [
@@ -65,16 +65,97 @@ pub const GRID: Grid = Grid {
     ],
 };
 
+pub struct RowIterator<'a> {
+    grid: &'a Grid,
+    n_row: usize,
+}
+
+impl<'a> Iterator for RowIterator<'a> {
+    type Item = Vec<u32>;
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.n_row > 19 {
+            None
+        } else {
+            let result = self.grid.row(self.n_row);
+            self.n_row = self.n_row + 1;
+            Some(result)
+        }
+    }
+}
+
+pub struct ColumnIterator<'a> {
+    grid: &'a Grid,
+    n_col: usize,
+}
+
+impl<'a> Iterator for ColumnIterator<'a> {
+    type Item = Vec<u32>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.n_col > 19 {
+            None
+        } else {
+            let result = self.grid.col(self.n_col);
+            self.n_col = self.n_col + 1;
+            Some(result)
+        }
+    }
+}
+
+pub struct DiagonalIterator<'a> {
+    grid: &'a Grid,
+    n_diag: usize,
+}
+
+impl<'a> Iterator for DiagonalIterator<'a> {
+    type Item = Vec<u32>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.n_diag > 38 * 2 {
+            None
+        } else if self.n_diag > 38 {
+            let result = self.grid.left_diagonal(self.n_diag - 38);
+            self.n_diag = self.n_diag + 1;
+            Some(result)
+        } else {
+            let result = self.grid.right_diagonal(self.n_diag);
+            self.n_diag = self.n_diag + 1;
+            Some(result)
+        }
+    }
+}
+
 impl Grid {
-    fn row(&self, row: usize) -> Vec<i32> {
+    pub fn row(&self, row: usize) -> Vec<u32> {
         self.0[row].iter().cloned().collect()
     }
 
-    fn col(&self, col: usize) -> Vec<i32> {
-        self.0.iter().map(|r| r[0]).collect()
+    pub fn rows(&self) -> RowIterator {
+        RowIterator {
+            grid: self,
+            n_row: 0,
+        }
     }
 
-    fn right_diagonal(&self, start: usize) -> Vec<i32> {
+    pub fn col(&self, col: usize) -> Vec<u32> {
+        self.0.iter().map(|r| r[col]).collect()
+    }
+
+    pub fn cols(&self) -> ColumnIterator {
+        ColumnIterator {
+            grid: self,
+            n_col: 0,
+        }
+    }
+
+    pub fn diags(&self) -> DiagonalIterator {
+        DiagonalIterator {
+            grid: self,
+            n_diag: 0,
+        }
+    }
+
+    pub fn right_diagonal(&self, start: usize) -> Vec<u32> {
         if start < 20 {
             self.right_diag_from_left(start)
         } else {
@@ -82,7 +163,15 @@ impl Grid {
         }
     }
 
-    fn right_diag_from_left(&self, start: usize) -> Vec<i32> {
+    pub fn left_diagonal(&self, start: usize) -> Vec<u32> {
+        if start < 20 {
+            self.left_diag_from_left(start)
+        } else {
+            self.left_diag_from_bot(start)
+        }
+    }
+
+    fn right_diag_from_left(&self, start: usize) -> Vec<u32> {
         let mut c = 0;
         let mut result = Vec::new();
 
@@ -94,7 +183,7 @@ impl Grid {
         result
     }
 
-    fn right_diag_from_top(&self, start: usize) -> Vec<i32> {
+    fn right_diag_from_top(&self, start: usize) -> Vec<u32> {
         let mut r = 0;
         let mut result = Vec::new();
         for c in (start - 19)..20 {
@@ -105,15 +194,7 @@ impl Grid {
         result
     }
 
-    fn left_diagonal(&self, start: usize) -> Vec<i32> {
-        if start < 20 {
-            self.left_diag_from_left(start)
-        } else {
-            self.left_diag_from_bot(start)
-        }
-    }
-
-    fn left_diag_from_left(&self, start: usize) -> Vec<i32> {
+    fn left_diag_from_left(&self, start: usize) -> Vec<u32> {
         let mut result = Vec::new();
         let mut c = 0;
 
@@ -130,7 +211,7 @@ impl Grid {
         result
     }
 
-    fn left_diag_from_bot(&self, start: usize) -> Vec<i32> {
+    fn left_diag_from_bot(&self, start: usize) -> Vec<u32> {
         let mut r = 19;
         let mut result = Vec::new();
 
@@ -164,5 +245,14 @@ mod tests {
 
         let d2 = GRID.left_diagonal(36);
         assert_eq!(d2, vec![19, 5, 16]);
+    }
+
+    #[test]
+    fn test_column() {
+        let c = GRID.col(4);
+        assert_eq!(
+            c,
+            vec![38, 17, 55, 4, 51, 99, 64, 2, 66, 75, 22, 96, 35, 5, 97, 57, 38, 72, 78, 83]
+        );
     }
 }

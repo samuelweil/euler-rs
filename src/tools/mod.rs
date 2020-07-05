@@ -1,5 +1,7 @@
-use std::cmp::{max};
 use std::collections::BTreeMap;
+use std::cmp::max;
+
+pub mod future;
 
 pub fn merge_max<'a>(
     m_in: &'a BTreeMap<u64, u64>,

@@ -47,6 +47,7 @@ fn mark(sieve: &mut Vec<bool>, index: usize) {
 mod tests {
     use super::*;
 
+    #[test]
     fn test_next_prime() {
         let sieve = vec![true, true, true, false, true];
         let p = next_prime(&sieve, 1);

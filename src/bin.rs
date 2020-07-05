@@ -30,4 +30,5 @@ fn main() {
     solve!(problem8);
     solve!(problem9);
     solve!(problem10);
+    solve!(problem11);
 }
