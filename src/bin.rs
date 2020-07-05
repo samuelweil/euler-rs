@@ -9,6 +9,7 @@ mod problem7;
 mod problem8; 
 mod problem9;
 mod problem10;
+mod problem11;
 mod tools;
 mod sieve;
 
@@ -29,4 +30,5 @@ fn main() {
     solve!(problem8);
     solve!(problem9);
     solve!(problem10);
+    solve!(problem11);
 }
