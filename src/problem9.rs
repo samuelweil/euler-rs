@@ -1,10 +1,10 @@
-pub fn problem9() -> i32 {
+pub fn problem9() -> u64 {
 
     for a in 1..1000 {
         for b in 1..1000 {
             let c = 1000 - a - b;
             if check_sum(a,b,c) && check_pythogareas(a,b,c) {
-                return a * b * c
+                return (a * b * c) as u64
             }
         }
     }
