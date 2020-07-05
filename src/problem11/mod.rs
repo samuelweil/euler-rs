@@ -1,7 +1,7 @@
 mod grid;
 
-use crate::tools::future::{run_async, Future};
-use grid::{Grid, GRID};
+use crate::tools::future::{run_async};
+use grid::{GRID};
 use std::cmp::max;
 
 pub fn problem11() -> u64 {

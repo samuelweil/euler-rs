@@ -2,6 +2,7 @@ mod factor;
 mod problem1;
 mod problem10;
 mod problem11;
+mod problem12;
 mod problem2;
 mod problem3;
 mod problem4;
@@ -12,6 +13,7 @@ mod problem8;
 mod problem9;
 mod sieve;
 mod tools;
+use std::io::{stdout, Write};
 
 macro_rules! prob {
     ($problem:ident) => {
@@ -19,7 +21,7 @@ macro_rules! prob {
     };
 }
 
-const PROBLEMS: [fn() -> u64; 11]  = [
+const PROBLEMS: [fn() -> u64; 12] = [
     prob!(problem1),
     prob!(problem2),
     prob!(problem3),
@@ -31,10 +33,13 @@ const PROBLEMS: [fn() -> u64; 11]  = [
     prob!(problem9),
     prob!(problem10),
     prob!(problem11),
+    prob!(problem12)
 ];
 
 fn solve(n: usize) {
-    println!("Solving problem {}: {}", n, PROBLEMS[n - 1]());
+    print!("Solving problem {}: ", n);
+    stdout().flush().unwrap();
+    println!("{}", PROBLEMS[n-1]());
 }
 
 fn main() {
